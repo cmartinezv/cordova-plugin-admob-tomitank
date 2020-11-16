@@ -56,7 +56,7 @@ public class AdMobConfig {
     public Location location = null;
 
     // Banner
-    private static final String TEST_BANNER_ID = "ca-app-pub-3940256099942544/6300978111";
+    private static final String TEST_BANNER_ID = "ca-app-pub-6205271473347641/9613065326";
     private String bannerAdUnitId = "";
     public AdSize adSize = AdSize.SMART_BANNER;
     /**
@@ -70,11 +70,11 @@ public class AdMobConfig {
     public boolean offsetTopBar = false;
 
     // Interstial
-    private static final String TEST_INTERSTITIAL_ID = "ca-app-pub-3940256099942544/1033173712";
+    private static final String TEST_INTERSTITIAL_ID = "ca-app-pub-6205271473347641/1161722050";
     private String interstitialAdUnitId = "";
 
     // Reward Video
-    private static final String TEST_REWARDED_VIDEO_ID = "ca-app-pub-3940256099942544/5224354917";
+    private static final String TEST_REWARDED_VIDEO_ID = "ca-app-pub-6205271473347641/8108411961";
     private String rewardVideoId = "";
 
 

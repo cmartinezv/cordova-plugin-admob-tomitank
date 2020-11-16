@@ -830,20 +830,22 @@
     wf.size.height = pr.size.height - top;
 
     if (self.bannerView ) {
-        if (pr.size.width > pr.size.height ) {
-            if(GADAdSizeEqualToSize(self.bannerView.adSize, kGADAdSizeSmartBannerPortrait)) {
-                self.bannerView.adSize = kGADAdSizeSmartBannerLandscape;
-            }
-        } else {
-            if(GADAdSizeEqualToSize(self.bannerView.adSize, kGADAdSizeSmartBannerLandscape)) {
-                self.bannerView.adSize = kGADAdSizeSmartBannerPortrait;
-            }
-        }
-
+//        if (pr.size.width > pr.size.height ) {
+//            if(GADAdSizeEqualToSize(self.bannerView.adSize, kGADAdSizeSmartBannerPortrait)) {
+//                self.bannerView.adSize = kGADAdSizeSmartBannerLandscape;
+//            }
+//        } else {
+//            if(GADAdSizeEqualToSize(self.bannerView.adSize, kGADAdSizeSmartBannerLandscape)) {
+//                self.bannerView.adSize = kGADAdSizeSmartBannerPortrait;
+//            }
+//        }
+        
+     
+        UIView* parentView = self.bannerOverlap ? self.webView : [self.webView superview];
         CGRect bf = self.bannerView.frame;
 
         // if the ad is not showing or the ad is hidden, we don't want to resize anything.
-        UIView* parentView = self.bannerOverlap ? self.webView : [self.webView superview];
+        
         BOOL adIsShowing = ([self.bannerView isDescendantOfView:parentView]) && (!self.bannerView.hidden);
 
         if (adIsShowing ) {
@@ -924,6 +926,15 @@
             // Hide safe area background if visibile and banner ad does not exist
             _safeAreaBackgroundView.hidden = true;
         }
+        
+        CGRect frame = parentView.frame;
+         // Here safe area is taken into account, hence the view frame is used after
+        // the view has been laid out.
+        if (@available(iOS 11.0, *)) {
+            frame = UIEdgeInsetsInsetRect(parentView.frame, parentView.safeAreaInsets);
+        } 
+
+        self.bannerView.adSize = GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(frame.size.width);
     } else {
         // Hide safe area background if visibile and banner ad does not exist
         _safeAreaBackgroundView.hidden = true;
