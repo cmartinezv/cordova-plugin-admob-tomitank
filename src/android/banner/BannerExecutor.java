@@ -1,11 +1,14 @@
 package name.tomitank.cordova.admob.banner;
 
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 
 import org.apache.cordova.CallbackContext;
@@ -69,7 +72,8 @@ public class BannerExecutor extends AbstractExecutor {
                 if (adView == null) {
                     adView = new AdView(cordova.getActivity());
                     adView.setAdUnitId(plugin.config.getBannerAdUnitId());
-                    adView.setAdSize(plugin.config.adSize);
+                    AdSize adSize = getAdSize();
+                    adView.setAdSize(adSize);
                     adView.setAdListener(new BannerListener(BannerExecutor.this));
                 }
                 if (adView.getParent() != null) {
@@ -274,6 +278,24 @@ public class BannerExecutor extends AbstractExecutor {
             }
             adViewLayout = null;
         }
+    }
+
+
+    private AdSize getAdSize() {
+        CordovaInterface cordova = plugin.cordova;
+
+        // Step 2 - Determine the screen width (less decorations) to use for the ad width.
+        Display display = cordova.getActivity().getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+
+        float widthPixels = outMetrics.widthPixels;
+        float density = outMetrics.density;
+
+        int adWidth = (int) (widthPixels / density);
+
+        // Step 3 - Get adaptive ad size and return for setting on the ad view.
+        return AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(cordova.getContext(), adWidth);
     }
 
     private View getWebView() {

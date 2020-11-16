@@ -34,8 +34,8 @@
         <preference name="ADMOB_APP_ID" default=""/>
         <!-- instead of cordova-admob-sdk-tomitank -->
         <preference name="PLAY_SERVICES_VERSION" default="16.0.+"/>
-        <framework src="com.google.android.gms:play-services-base:$PLAY_SERVICES_VERSION" />
-        <framework src="com.google.android.gms:play-services-ads:$PLAY_SERVICES_VERSION" />
+        <framework src="com.google.android.gms:play-services-base:17.5.+" />
+        <framework src="com.google.android.gms:play-services-ads:19.0.+" />
 
         <config-file parent="/manifest/application" target="AndroidManifest.xml">
             <activity android:name="com.google.android.gms.ads.AdActivity"
